@@ -1,5 +1,5 @@
 # Utiliser l'image officielle de Python comme image de base
-FROM python:3.9
+FROM python:3.12
 
 # Définir le répertoire de travail dans le conteneur
 WORKDIR /app
@@ -11,7 +11,7 @@ COPY ./project-flask/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copier le reste du code de l'application dans le répertoire de travail
-COPY . .
+COPY ./project-flask .
 
 # Exposer le port sur lequel l'application s'exécute
 EXPOSE 5000
