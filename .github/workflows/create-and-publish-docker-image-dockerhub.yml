@@ -1,17 +1,11 @@
-name: Create and publish a Docker image
+name: Create and publish a container image on dockerhub registry
 on:
-    push:
-      branches:
-        - 'main'
-        - 'release'
-    #pull_request:
-    #  branches:
-    #    - 'main'
-    #workflow_dispatch:
+  release:
+    types: 
+      published
 env:
-    REGISTRY_URL: ghcr.io
-    IMAGE_NAME: ${{github.repository}}
-
+  DOCKERHUB_NAMESPACE: "gbigbi210141989"
+  IMAGE_NAME: "web-apps"
 jobs:
     build-and-push-image:
         runs-on: ubuntu-latest
@@ -25,19 +19,18 @@ jobs:
             - name: Log in to the container registry
               uses: docker/login-action@v3
               with:
-                registry: ${{env.REGISTRY_URL}}
-                username: ${{github.actor}}
-                password: ${{secrets.GITHUB_TOKEN}}
+                username: ${{secrets.DOCKERHUB_USERNAME}}
+                password: ${{secrets.DOCKERHUB_PASSWD}}
             - name: Extract metadata (tags, labels) for Docker
               id: meta
               uses: docker/metadata-action@v5
               with:
-                images: ${{env.REGISTRY_URL}}/${{env.IMAGE_NAME}}
+                images: ${{env.DOCKERHUB_NAMESPACE}}/${{env.IMAGE_NAME}}
             - name: Build and push Docker image
               uses: docker/build-push-action@v6
               with:
                 context: .
+                file: ./Dockerfile
                 push: true
-                #push: ${{ github.event_name != 'pull_request' }}
                 tags: ${{steps.meta.outputs.tags}}
                 labels: ${{steps.meta.outputs.labels}}
