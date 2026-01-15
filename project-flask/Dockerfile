@@ -4,6 +4,7 @@ FROM python:3.9
 # Définir le répertoire de travail dans le conteneur
 WORKDIR /app
 
+RUN ls -la
 # Copier requirements.txt dans le répertoire de travail
 COPY requirements.txt ./
 
