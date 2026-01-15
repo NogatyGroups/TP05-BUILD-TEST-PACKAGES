@@ -5,6 +5,7 @@ FROM python:3.9
 WORKDIR /app
 
 RUN ls -la
+RUN pwd
 # Copier requirements.txt dans le répertoire de travail
 COPY requirements.txt ./
 
