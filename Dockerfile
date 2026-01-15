@@ -1,20 +1,20 @@
-version: '3.8'
-services:
-  web:
-    build: .
-    ports:
-      - "3000:3000"
-    depends_on:
-      - db
-    environment:
-      - MONGO_URI=mongodb://db:27017/mydatabase
+# Utiliser l'image officielle de Python comme image de base
+FROM python:3.9
 
-  db:
-    image: mongo:latest
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
+# Définir le répertoire de travail dans le conteneur
+WORKDIR /app
 
-volumes:
-  mongo-data:
+# Copier requirements.txt dans le répertoire de travail
+COPY requirements.txt ./
+
+# Installer les dépendances
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copier le reste du code de l'application dans le répertoire de travail
+COPY . .
+
+# Exposer le port sur lequel l'application s'exécute
+EXPOSE 5000
+
+# Démarrer l'application
+CMD ["python", "app.py"]
