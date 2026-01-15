@@ -4,10 +4,8 @@ FROM python:3.9
 # Définir le répertoire de travail dans le conteneur
 WORKDIR /app
 
-RUN ls -la
-RUN pwd
 # Copier requirements.txt dans le répertoire de travail
-COPY requirements.txt ./
+COPY ./project-flask/requirements.txt ./
 
 # Installer les dépendances
 RUN pip install --no-cache-dir -r requirements.txt
