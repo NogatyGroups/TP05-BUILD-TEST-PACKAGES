@@ -104,4 +104,198 @@ try {
 - **`package.json`**: Décrit les dépendances et les métadonnées du projet.
 - **`README.md`**: Fournit des informations sur l'action, y compris comment l'utiliser.
 
-En suivant cette structure et ces exemples, vous pouvez créer une action GitHub personnalisée en JavaScript.
+
+
+
+### Structure du répertoire pour une action Docker personnalisée
+
+```plaintext
+/your-action-name
+    Dockerfile
+    action.yml
+    entrypoint.sh
+    README.md
+```
+
+### Exemple d'action
+
+```yaml
+name: "My Docker action"
+description: "A description of your action"
+inputs:
+    my-input:
+        description: "Input to use in the action"
+        required: true
+        default: "HPierre"
+
+outputs:
+    my-output:
+        description: "Output from action"
+
+runs:
+    using: "docker"
+    image: "Dockerfile"
+    args:
+      - my-input
+```
+
+### Exemple de fichier `README.md`
+
+```markdown
+# My Docker Action
+
+## Description
+
+A description of your action.
+
+## Inputs
+
+### `my-input`
+
+**Required**: true  
+**Default**: "HPierre"  
+Description: Input to use in the action.
+
+## Outputs
+
+### `my-output`
+
+Description: Output from action.
+
+## Example Usage
+
+```yaml
+uses: your-username/your-action-name@v1
+with:
+  my-input: "Some input value"
+```
+```
+
+### Exemple de fichier `Dockerfile`
+
+```Dockerfile
+# Utiliser l'image officielle de base
+FROM alpine:3.12
+
+# Installer les dépendances nécessaires
+RUN apk add --no-cache bash curl jq
+
+# Copier le script d'entrée
+COPY entrypoint.sh /entrypoint.sh
+
+# Rendre le script exécutable
+RUN chmod +x /entrypoint.sh
+
+# Définir le point d'entrée
+ENTRYPOINT ["/entrypoint.sh"]
+```
+
+### Exemple de fichier `entrypoint.sh`
+
+```bash
+#!/bin/bash
+
+set -e
+
+# Récupérer l'entrée
+MY_INPUT="$1"
+echo "Input: $MY_INPUT"
+
+# Définir la sortie
+echo "::set-output name=my-output::Hello, $MY_INPUT!"
+```
+
+### Explication des fichiers
+
+- **`action.yml`**: Décrit l'action, ses entrées, ses sorties et comment elle s'exécute.
+- **`Dockerfile`**: Définit l'image Docker utilisée pour exécuter l'action.
+- **`entrypoint.sh`**: Contient le script d'entrée qui sera exécuté dans le conteneur Docker.
+- **`README.md`**: Fournit des informations sur l'action, y compris comment l'utiliser.
+
+### Exemple de fichier `action.yml` en détail
+
+```yaml
+name: "My Docker action"
+description: "A description of your action"
+inputs:
+    my-input:
+        description: "Input to use in the action"
+        required: true
+        default: "HPierre"
+
+outputs:
+    my-output:
+        description: "Output from action"
+
+runs:
+    using: "docker"
+    image: "Dockerfile"
+    args:
+      - my-input
+```
+
+### Exemple de fichier `README.md` en détail
+
+```markdown
+# My Docker Action
+
+## Description
+
+A description of your action.
+
+## Inputs
+
+### `my-input`
+
+**Required**: true  
+**Default**: "HPierre"  
+Description: Input to use in the action.
+
+## Outputs
+
+### `my-output`
+
+Description: Output from action.
+
+## Example Usage
+
+```yaml
+uses: your-username/your-action-name@v1
+with:
+  my-input: "Some input value"
+```
+```
+
+### Exemple de fichier `Dockerfile` en détail
+
+```Dockerfile
+# Utiliser l'image officielle de base
+FROM alpine:3.12
+
+# Installer les dépendances nécessaires
+RUN apk add --no-cache bash curl jq
+
+# Copier le script d'entrée
+COPY entrypoint.sh /entrypoint.sh
+
+# Rendre le script exécutable
+RUN chmod +x /entrypoint.sh
+
+# Définir le point d'entrée
+ENTRYPOINT ["/entrypoint.sh"]
+```
+
+### Exemple de fichier `entrypoint.sh` en détail
+
+```bash
+#!/bin/bash
+
+set -e
+
+# Récupérer l'entrée
+MY_INPUT="$1"
+echo "Input: $MY_INPUT"
+
+# Définir la sortie
+echo "::set-output name=my-output::Hello, $MY_INPUT!"
+```
