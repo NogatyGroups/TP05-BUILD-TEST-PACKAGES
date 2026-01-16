@@ -302,3 +302,6 @@ echo "::set-output name=my-output::Hello, $MY_INPUT!"
 
 ## Configuration d'un self-hosted runner entreprise
 ![alt text](image.png)
+
+## GITHUB Action toolkit
+https://github.com/actions/toolkit.git
